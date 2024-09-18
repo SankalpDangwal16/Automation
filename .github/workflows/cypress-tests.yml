@@ -1,4 +1,4 @@
-name: Run Cypress Demo.cy.js Test
+name: Run Cypress Tests
 
 on:
   push:
@@ -25,10 +25,8 @@ jobs:
         working-directory: ./cypress-automation
         run: npm install
 
-      - name: Ensure Cypress binary is executable
-        working-directory: ./cypress-automation
-        run: chmod +x ./node_modules/.bin/cypress
-
-      - name: Run Cypress Demo.cy.js test
-        working-directory: ./cypress-automation
-        run: npx cypress run --spec "cypress/e2e/2-advanced-examples/Demo.cy.js"
+      - name: Run Cypress tests using official GitHub Action
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ./cypress-automation
+          spec: cypress/e2e/Demo.cy.js
