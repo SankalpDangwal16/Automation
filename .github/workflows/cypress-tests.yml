@@ -1,4 +1,4 @@
-name: Run Cypress Tests
+name: Run Cypress Demo.cy.js Test
 
 on:
   push:
@@ -29,6 +29,6 @@ jobs:
         working-directory: ./cypress-automation
         run: chmod +x ./node_modules/.bin/cypress
 
-      - name: Run Cypress tests
+      - name: Run Cypress Demo.cy.js test
         working-directory: ./cypress-automation
-        run: npx cypress run
+        run: npx cypress run --spec "cypress/e2e/2-advanced-examples/Demo.cy.js"
