@@ -27,16 +27,16 @@ jobs:
 
       - name: Run Cypress tests
         working-directory: ./cypress-automation
-        run: npx cypress run --reporter mochawesome --reporter-options overwrite=false,html=false,json=true,reportDir=cypress/reports
+        run: npx cypress run --spec "cypress/e2e/Demo.cy.js" --reporter mochawesome --reporter-options overwrite=false,html=false,json=true,reportDir=cypress/reports
 
       - name: Generate HTML report
         working-directory: ./cypress-automation
         run: |
-          npx mochawesome-merge cypress/reports/*.json > cypress/reports/merged-report.json
-          npx marge cypress/reports/merged-report.json --reportDir cypress/reports --inline
+          npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
+          npx marge cypress/reports/combined-report.json --reportDir cypress/reports --inline
 
-      - name: Upload Test Report
+      - name: Upload Cypress Test Report
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-test-report
+          name: cypress-report
           path: ./cypress-automation/cypress/reports/*.html
