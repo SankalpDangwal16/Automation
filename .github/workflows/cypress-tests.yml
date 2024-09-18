@@ -21,13 +21,10 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Change to the cypress-automation directory
-        run: cd cypress-automation
-
       - name: Install dependencies
-        working-directory: cypress-automation
+        working-directory: ./cypress-automation
         run: npm install
 
       - name: Run Cypress tests
-        working-directory: cypress-automation
+        working-directory: ./cypress-automation
         run: npx cypress run
