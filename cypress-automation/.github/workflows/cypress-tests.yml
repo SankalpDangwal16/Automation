@@ -1,4 +1,4 @@
-name: Run Cypress Tests
+name: Run Cypress Tests with Reports
 
 on:
   push:
@@ -25,8 +25,18 @@ jobs:
         working-directory: ./cypress-automation
         run: npm install
 
-      - name: Run Cypress tests using official GitHub Action
-        uses: cypress-io/github-action@v4
+      - name: Run Cypress tests
+        working-directory: ./cypress-automation
+        run: npx cypress run --reporter mochawesome --reporter-options overwrite=false,html=false,json=true,reportDir=cypress/reports
+
+      - name: Generate HTML report
+        working-directory: ./cypress-automation
+        run: |
+          npx mochawesome-merge cypress/reports/*.json > cypress/reports/merged-report.json
+          npx marge cypress/reports/merged-report.json --reportDir cypress/reports --inline
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v3
         with:
-          working-directory: ./cypress-automation
-          spec: cypress/e2e/Demo.cy.js
+          name: cypress-test-report
+          path: ./cypress-automation/cypress/reports/*.html
