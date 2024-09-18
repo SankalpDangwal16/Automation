@@ -25,7 +25,10 @@ jobs:
         working-directory: ./cypress-automation
         run: npm install
 
+      - name: Ensure Cypress binary is executable
+        working-directory: ./cypress-automation
+        run: chmod +x ./node_modules/.bin/cypress
+
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v4
-        with:
-          working-directory: ./cypress-automation
+        working-directory: ./cypress-automation
+        run: npx cypress run
